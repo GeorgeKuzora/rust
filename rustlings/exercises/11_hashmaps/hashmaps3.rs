@@ -31,6 +31,30 @@ fn build_scores_table(results: &str) -> HashMap<&str, TeamScores> {
         // Keep in mind that goals scored by team 1 will be the number of goals
         // conceded by team 2. Similarly, goals scored by team 2 will be the
         // number of goals conceded by team 1.
+        let team_1_current_scores = scores.get(team_1_name).unwrap_or(
+            &TeamScores {
+                goals_scored: 0,
+                goals_conceded: 0,
+            }
+        );
+        let team_2_current_scores = scores.get(team_2_name).unwrap_or(
+            &TeamScores {
+                goals_scored: 0,
+                goals_conceded: 0,
+            }
+        );
+
+        let updated_team_1_scores = TeamScores {
+            goals_scored: team_1_current_scores.goals_scored + team_1_score,
+            goals_conceded: team_1_current_scores.goals_conceded + team_2_score,
+        };
+        let updated_team_2_scores = TeamScores {
+            goals_scored: team_2_current_scores.goals_scored + team_2_score,
+            goals_conceded: team_2_current_scores.goals_conceded + team_1_score,
+        };
+
+        scores.insert(team_1_name, updated_team_1_scores);
+        scores.insert(team_2_name, updated_team_2_scores);
     }
 
     scores
