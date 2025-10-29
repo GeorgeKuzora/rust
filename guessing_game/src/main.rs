@@ -21,7 +21,7 @@ fn main() {
             Err(_) => {
                 println!("Please insert valid number!");
                 continue;
-            },
+            }
         };
 
         println!("You guessed {guess}");
